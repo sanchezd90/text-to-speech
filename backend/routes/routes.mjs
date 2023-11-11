@@ -2,7 +2,6 @@ import express from "express";
 import { pipeline } from "@xenova/transformers";
 import wavefile from "wavefile";
 import { readdir, writeFile } from "fs/promises";
-import { randomUUID } from "crypto";
 import path from "path";
 
 import { PUBLIC_PATH, FILE_EXTENSION } from "../server/app.mjs";
@@ -26,15 +25,15 @@ router.post("/generate", async (req, res) => {
 
     const wav = new wavefile.WaveFile();
     wav.fromScratch(1, output.sampling_rate, "32f", output.audio);
-
-    const id = randomUUID();
-    const filePath = path.join(PUBLIC_PATH, `audio-${id}.wav`);
+    
+    const timestamp = Date.now()
+    const filePath = path.join(PUBLIC_PATH, `${timestamp}.wav`);
 
     await writeFile(filePath, wav.toBuffer());
 
     const host = req.get("host");
     res.json({
-      url: `${req.protocol}://${host}/audio-${id}.${FILE_EXTENSION}`,
+      url: `${req.protocol}://${host}/${timestamp}.${FILE_EXTENSION}`,
     });
   } catch (error) {
     console.error("Error generating audio:", error);
