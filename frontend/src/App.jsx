@@ -1,7 +1,7 @@
 // Update your JSX
 import React, { useState } from "react";
 import axios from "axios";
-import { Container, Form, Button, Spinner, Card } from "react-bootstrap";
+import { Container, Form, Button, Spinner } from "react-bootstrap";
 import "./index.css";
 
 function App() {
@@ -43,16 +43,16 @@ function App() {
     <Container className="text-center mt-5" style={{ maxWidth: "50vw" }}>
       <h1>Text to Speech</h1>
       <p className="mb-4">
-        Enter a prompt and click 'Submit' to generate and play audio.
+        Enter a text and click 'Submit' to generate audio.
       </p>
 
       <Form onSubmit={handleSubmit} className="mb-4">
-        <Form.Group controlId="formPrompt" className="mb-3">
-          <Form.Label>Enter Prompt:</Form.Label>
+        <Form.Group controlId="formPrompt" className="mb-3">          
           <Form.Control
             type="text"
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={(e) => setPrompt(e.target.value)}as="textarea" // Use textarea for multiline input
+            rows={4} // Set the initial number of rows                      
           />
         </Form.Group>
         <Button type="submit" variant="primary" disabled={loading}>
