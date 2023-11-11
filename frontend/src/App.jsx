@@ -31,6 +31,7 @@ function App() {
       const { audioFiles } = recuperateResponse.data;
 
       setAudioFiles(audioFiles);
+      setPrompt("")
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -92,12 +93,7 @@ function App() {
     </audio>
     {audioFiles.length>1 && <h2 className="mb-3 mt-5">Previous conversions</h2>}
     <div className="mt-6">
-      {audioFiles
-        .sort((a, b) => {
-          const timestampA = parseInt(a.split(".")[0]);
-          const timestampB = parseInt(b.split(".")[0]);                
-          return timestampB - timestampA;
-        })
+      {audioFiles        
         .slice(1)
         .map((audio) => (
           <audio controls key={audio} className="audio-control">
